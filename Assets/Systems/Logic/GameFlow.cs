@@ -7,6 +7,7 @@ public class GameFlow : MonoBehaviour, IGameFlow
     public event Action<GameState> OnGameStateChanged;
 
     private GameState _currentGameState;
+    private GameState _nextGameState;
     
     private void Awake()
     {
@@ -27,17 +28,18 @@ public class GameFlow : MonoBehaviour, IGameFlow
         OnGameStateChanged?.Invoke(_currentGameState);
     }
 
-    private void Start()
-    {
-        _currentGameState = new MenuState();
-        OnGameStateChanged?.Invoke(_currentGameState);
-    }
-
     private void Update()
     {
         if (_currentGameState != null)
         {
-            //_currentGameState.Update();
+            _nextGameState = _currentGameState.Update();
+
+            if (_nextGameState != null && _nextGameState != _currentGameState)
+            {
+                _currentGameState = _nextGameState;
+                _currentGameState.Start();
+                OnGameStateChanged?.Invoke(_currentGameState);
+            }
         }
     }
 }

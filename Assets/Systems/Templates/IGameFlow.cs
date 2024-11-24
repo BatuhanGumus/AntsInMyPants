@@ -1,14 +1,14 @@
 
 using System;
+using Photon.Realtime;
 
 public abstract class GameState
 {
     public virtual void Start(){}
-    public virtual void Update(){}
 
-    public virtual GameState End()
+    public virtual GameState Update()
     {
-        return null;
+        return this;
     }
 
     public virtual bool DoneCondition()
@@ -23,9 +23,34 @@ public class PreGameState : GameState
     {
         GameData.SaveManager.GetSavedData();
     }
+
+    public override GameState Update()
+    {
+        return new LoginGameState();
+    }
 }
 
-public class MenuState : GameState
+public class LoginGameState : GameState
+{
+    public override bool DoneCondition()
+    {
+        return GameData.OnlineManager.OnlineState == ClientState.JoinedLobby;
+    }
+
+    public override GameState Update()
+    {
+        if (DoneCondition())
+        {
+            return new LobbyMenuGameState();
+        }
+        else
+        {
+            return this;
+        }
+    }
+}
+
+public class LobbyMenuGameState : GameState
 {
     
 }

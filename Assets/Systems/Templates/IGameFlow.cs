@@ -52,7 +52,30 @@ public class LoginGameState : GameState
 
 public class LobbyMenuGameState : GameState
 {
-    
+    public override bool DoneCondition()
+    {
+        return GameData.OnlineManager.OnlineState == ClientState.Joined;
+    }
+
+    public override GameState Update()
+    {
+        if (DoneCondition())
+        {
+            if (GameData.OnlineManager.IsOwnerClient)
+            {
+                return new OwnerGameState();
+            }
+            else
+            {
+                return new RemoteGameState();
+            }
+            
+        }
+        else
+        {
+            return this;
+        }
+    }
 }
 
 public class OwnerGameState : GameState

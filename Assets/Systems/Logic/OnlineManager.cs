@@ -11,7 +11,15 @@ public class OnlineManager : MonoBehaviourPunCallbacks, IOnlineManager
             return PhotonNetwork.NetworkClientState;
         }
     }
-    
+
+    public bool IsOwnerClient
+    {
+        get
+        {
+            return PhotonNetwork.IsMasterClient;
+        }
+    }
+
     private void Awake()
     {
         if (GameData.OnlineManager == null)

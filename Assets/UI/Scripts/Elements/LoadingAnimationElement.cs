@@ -5,15 +5,17 @@ using UnityEngine.UI;
 
 public class LoadingAnimationElement : MonoBehaviour
 {
+    private const float AnimationStep = 0.1f;
+    
     [SerializeField] private Image loadingImage;
-    [SerializeField] private float animationStep = 0.2f;
+    
 
     private bool _run = false;
     
     private void OnEnable()
     {
         _run = true;
-        Invoke("Animation", animationStep);
+        Invoke("Animation", AnimationStep);
     }
 
     private void Animation()
@@ -23,7 +25,7 @@ public class LoadingAnimationElement : MonoBehaviour
         var newFill = loadingImage.fillOrigin + 1;
         if (newFill >= 4) newFill = 0;
         loadingImage.fillOrigin = newFill;
-        Invoke("Animation", animationStep);
+        Invoke("Animation", AnimationStep);
     }
 
     private void OnDisable()

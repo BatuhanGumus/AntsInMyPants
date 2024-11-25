@@ -12,7 +12,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks, IOnlineManager
         }
     }
 
-    public bool IsOwnerClient
+    public bool IsRoomOwner
     {
         get
         {
@@ -30,6 +30,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks, IOnlineManager
         {
             Debug.LogError("[Online Manager]: two instances of the game flow, destroying newest");
             Destroy(gameObject);
+            
         }
     }
 

@@ -27,7 +27,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
     
     public void CreateRoom(string roomName)
     {
-        roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
+        roomName = (roomName.Equals(string.Empty)) ? $"{GameData.SaveManager.CurrentSave.username}'s Room " + Random.Range(1000, 10000) : roomName;
         byte maxPlayers = 8;
         RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
         PhotonNetwork.CreateRoom(roomName, options, null);
@@ -35,17 +35,22 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-           
+        Debug.LogError($"[Room Manager]: Create room failed with code[{returnCode}]\n message: {message}");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-           
+        Debug.LogError($"[Room Manager]: Join room failed with code[{returnCode}]\n message: {message}");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-
+        Debug.LogError($"[Room Manager]: Join random room failed with code[{returnCode}]\n message: {message}");
+    }
+    
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -100,7 +105,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
 
     public override void OnLeftRoom()
     {
-
+        PhotonNetwork.Disconnect();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

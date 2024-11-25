@@ -1,6 +1,8 @@
 
 using System;
+using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
 public abstract class GameState
 {
@@ -43,10 +45,8 @@ public class LoginGameState : GameState
         {
             return new LobbyMenuGameState();
         }
-        else
-        {
-            return this;
-        }
+        
+        return this;
     }
 }
 
@@ -61,32 +61,21 @@ public class LobbyMenuGameState : GameState
     {
         if (DoneCondition())
         {
-            if (GameData.OnlineManager.IsOwnerClient)
-            {
-                return new OwnerGameState();
-            }
-            else
-            {
-                return new RemoteGameState();
-            }
-            
+            return new InGameState();
         }
-        else
-        {
-            return this;
-        }
+        
+        return this;
     }
 }
 
-public class OwnerGameState : GameState
+public class InGameState : GameState
 {
-    
+    public override void Start()
+    {
+        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);  
+    }
 }
 
-public class RemoteGameState : GameState
-{
-    
-}
 
 public interface IGameFlow
 {

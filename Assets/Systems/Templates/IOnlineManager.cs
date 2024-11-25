@@ -4,6 +4,7 @@ using Photon.Realtime;
 public interface IOnlineManager
 {
         public ClientState OnlineState { get; }
-        public bool IsOwnerClient { get; }
+        public bool IsRoomOwner { get; }
+        
         public void Login();
 }

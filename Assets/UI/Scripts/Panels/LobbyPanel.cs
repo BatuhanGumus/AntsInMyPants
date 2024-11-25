@@ -48,6 +48,7 @@ namespace Photon.Pun.Demo.Asteroids
         {
             string roomName = roomNameInputField.text;
             GameData.RoomManager.CreateRoom(roomName);
+            ShowLoading(true);
         }
 
         private void ShowLoading(bool isLoading)

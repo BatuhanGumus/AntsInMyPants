@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
     public Vector3 offset;
 
-    private bool activated;
+    private bool _activated;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (activated && GameData.RoomManager.LocalPlayer != null)
+        if (_activated && GameData.RoomManager.LocalPlayer != null)
         {
             transform.position = Vector3.Lerp(
                 transform.position,
@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     {
         if (state is InGameState)
         {
-            activated = true;
+            _activated = true;
         }
     }
 }

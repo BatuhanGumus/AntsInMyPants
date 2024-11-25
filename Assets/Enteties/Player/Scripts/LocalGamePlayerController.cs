@@ -17,7 +17,7 @@ public class LocalGamePlayerController : MonoBehaviour
     
     private CharacterController controller;
     private Animator animator;
-
+    
     [ReadOnly] [SerializeField] private Vector3 playerVelocity;
     [ReadOnly] [SerializeField] private bool groundedPlayer;
     [ReadOnly] [SerializeField] private bool inLeap;

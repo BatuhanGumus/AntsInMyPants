@@ -97,10 +97,40 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
     {
         
     }
+
+    public Dictionary<Player, GamePlayer> Players => _players;
+    private Dictionary<Player, GamePlayer> _players = new Dictionary<Player, GamePlayer>();
+    public GamePlayer LocalPlayer => _localPlayer;
+    private GamePlayer _localPlayer;
     
+    public void RegisterSpawnedPlayer(Player player, GamePlayer gamePlayer)
+    {
+        _players[player] = gamePlayer;
+    }
+
     public override void OnJoinedRoom()
     {
+        var spawned = PhotonNetwork.Instantiate(
+            "Player",
+            Vector3.zero,
+            Quaternion.identity,
+            0,
+            GetPlayerInstantiateData()).GetComponent<GamePlayer>();
 
+        _localPlayer = spawned;
+    }
+
+    private object[] GetPlayerInstantiateData()
+    {
+        if (GameData.SaveManager.CurrentSave == null)
+            return null;
+
+        object[] data = new[]
+        {
+            GameData.SaveManager.CurrentSave.username,
+        };
+
+        return data;
     }
 
     public override void OnLeftRoom()
@@ -115,14 +145,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-            
+        _players.Remove(otherPlayer);
     }
     
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         
     }
-    
+
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)

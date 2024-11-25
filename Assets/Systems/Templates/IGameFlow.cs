@@ -70,10 +70,7 @@ public class LobbyMenuGameState : GameState
 
 public class InGameState : GameState
 {
-    public override void Start()
-    {
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);  
-    }
+    
 }
 
 

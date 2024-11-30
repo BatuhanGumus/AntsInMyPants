@@ -8,7 +8,7 @@ public static class GameData
     public static IRoomManager RoomManager;
     public static INetworkEventManager NetworkEventManager;
     public static IChatManager ChatManager;
-    
+    public static ICreatureManager CreatureManager;
 
     public static void Init()
     {

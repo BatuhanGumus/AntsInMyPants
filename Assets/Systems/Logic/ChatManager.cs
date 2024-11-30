@@ -10,12 +10,6 @@ public class ChatManager : IChatManager
     public ChatManager()
     {
         GameData.NetworkEventManager.Events[NetworkEventType.ChatMessageEvent] += ChatMessageEvent;
-
-        OnNewChatMessage += () =>
-        {
-            var latestMessage = _chatHistory.Peek();
-            Debug.Log($"[Chat Manager]: message from {latestMessage.Item1.NickName} - \"{latestMessage.Item2}\"");
-        };
     }
     
     ~ChatManager()
@@ -25,7 +19,9 @@ public class ChatManager : IChatManager
     
     public Queue<Tuple<Player, string>> ChatHistory => _chatHistory;
     private Queue<Tuple<Player, string>> _chatHistory = new Queue<Tuple<Player, string>>();
-    public Action OnNewChatMessage { get; }
+    public Action<Player,string> OnNewChatMessage { get; set; }
+    public Action<bool> OnChatMode { get; set; }
+    
     public void SendChatMessage(string message)
     {
         GameData.NetworkEventManager.SendEvent(NetworkEventType.ChatMessageEvent, 
@@ -36,9 +32,18 @@ public class ChatManager : IChatManager
             });
     }
 
+    public bool InChatMode => _inChatMode;
+    private bool _inChatMode;
+
     private void ChatMessageEvent(object[] data)
     {
         _chatHistory.Enqueue(new Tuple<Player, string>((Player)data[0], (string)data[1]));
-        OnNewChatMessage?.Invoke();
+        OnNewChatMessage?.Invoke(((Player)data[0]), (string)data[1]);
+    }
+
+    public void ChatMode(bool state)
+    {
+        _inChatMode = state;
+        OnChatMode?.Invoke(state);
     }
 }

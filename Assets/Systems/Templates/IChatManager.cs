@@ -6,6 +6,9 @@ using Photon.Realtime;
 public interface IChatManager
 {
     Queue<Tuple<Player, string>> ChatHistory { get; }
-    Action OnNewChatMessage { get; }
+    Action<Player,string> OnNewChatMessage { get; set; }
+    Action<bool> OnChatMode { get; set; }
     void SendChatMessage(string message);
+    bool InChatMode { get; }
+    void ChatMode(bool state);
 }

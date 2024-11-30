@@ -8,6 +8,8 @@ public enum NetworkEventType : byte
 {
     PingPong = 1,
     ChatMessageEvent = 2,
+    CreatureCaught = 3,
+    
 }
 
 public interface INetworkEventManager

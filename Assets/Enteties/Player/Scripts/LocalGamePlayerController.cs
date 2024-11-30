@@ -22,7 +22,6 @@ public class LocalGamePlayerController : MonoBehaviour
     
     private CharacterController _controller;
     
-    
     private Vector3 _playerVelocity;
     private Vector3 _move;
     private bool _grounded;
@@ -155,7 +154,7 @@ public class LocalGamePlayerController : MonoBehaviour
     private bool CheckForCreature(out Creature closestCreature)
     {
         closestCreature = null;
-        var cols = Physics.OverlapSphere(interactionOrigin.position, 1.4f, 
+        var cols = Physics.OverlapSphere(interactionOrigin.position, 1.2f, 
             _creatureLayerMask);
         if (cols == null || cols.Length == 0) return false;
 
@@ -196,7 +195,7 @@ public class LocalGamePlayerController : MonoBehaviour
         if (interactionOrigin != null)
         {
             Gizmos.color = new Color(0, 0, 1, 0.4f);
-            Gizmos.DrawSphere(interactionOrigin.position, 1.4f);
+            Gizmos.DrawSphere(interactionOrigin.position, 1.2f);
         }
     }
 }

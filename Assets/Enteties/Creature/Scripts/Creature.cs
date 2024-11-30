@@ -10,6 +10,6 @@ public class Creature : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameData.CreatureManager.CreatureDestroyed(this);
+         GameData.CreatureManager.CreatureDestroyed(this);
     }
 }

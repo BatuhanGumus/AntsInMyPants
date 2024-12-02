@@ -21,7 +21,7 @@ public class GamePlayer : MonoBehaviour, IPunInstantiateMagicCallback
     [SerializeField] private TMP_Text usernameText;
     [SerializeField] private GameObject chatBubbleCellPrefab;
 
-    [HideInInspector] public Player OwnerPlayer;
+    public Player OwnerPlayer;
     private string _username;
     
     private Camera _cam;

@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CloseChat",
+                    "name": "OptionsMenu",
                     "type": "Button",
                     "id": "eefb1142-c465-4cad-bb1b-f1553a80e0b9",
                     "expectedControlType": "",
@@ -403,7 +403,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CloseChat",
+                    "action": "OptionsMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

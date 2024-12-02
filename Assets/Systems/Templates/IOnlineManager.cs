@@ -7,4 +7,5 @@ public interface IOnlineManager
         public bool IsRoomOwner { get; }
         
         public void Login();
+        void Logout();
 }

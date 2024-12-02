@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameFlow : MonoBehaviour, IGameFlow
 {
+    public string gameStateName = "";
+    
     public GameState CurrentGameState => _currentGameState;
     public event Action<GameState> OnGameStateChanged;
 
@@ -36,6 +38,7 @@ public class GameFlow : MonoBehaviour, IGameFlow
 
             if (_nextGameState != null && _nextGameState != _currentGameState)
             {
+                gameStateName = _nextGameState.ToString();
                 _currentGameState = _nextGameState;
                 _currentGameState.Start();
                 OnGameStateChanged?.Invoke(_currentGameState);

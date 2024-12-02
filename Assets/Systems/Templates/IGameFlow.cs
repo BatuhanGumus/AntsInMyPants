@@ -12,11 +12,6 @@ public abstract class GameState
     {
         return this;
     }
-
-    public virtual bool DoneCondition()
-    {
-        return false;
-    }
 }
 
 public class PreGameState : GameState
@@ -34,14 +29,9 @@ public class PreGameState : GameState
 
 public class LoginGameState : GameState
 {
-    public override bool DoneCondition()
-    {
-        return GameData.OnlineManager.OnlineState == ClientState.JoinedLobby;
-    }
-
     public override GameState Update()
     {
-        if (DoneCondition())
+        if (GameData.OnlineManager.OnlineState == ClientState.JoinedLobby)
         {
             return new LobbyMenuGameState();
         }
@@ -52,14 +42,9 @@ public class LoginGameState : GameState
 
 public class LobbyMenuGameState : GameState
 {
-    public override bool DoneCondition()
-    {
-        return GameData.OnlineManager.OnlineState == ClientState.Joined;
-    }
-
     public override GameState Update()
     {
-        if (DoneCondition())
+        if (GameData.OnlineManager.OnlineState == ClientState.Joined)
         {
             return new InGameState();
         }
@@ -70,7 +55,15 @@ public class LobbyMenuGameState : GameState
 
 public class InGameState : GameState
 {
-    
+    public override GameState Update()
+    {
+        if (GameData.OnlineManager.OnlineState == ClientState.JoinedLobby)
+        {
+            return new LobbyMenuGameState();
+        }
+        
+        return this;
+    }
 }
 
 

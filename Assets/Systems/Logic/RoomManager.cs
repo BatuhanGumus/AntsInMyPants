@@ -95,7 +95,12 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
 
     public void LeaveRoom()
     {
-        
+        GameData.SaveManager.MarkDirty();
+
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     public Dictionary<Player, GamePlayer> Players => _players;
@@ -135,7 +140,10 @@ public class RoomManager : MonoBehaviourPunCallbacks, IRoomManager
 
     public override void OnLeftRoom()
     {
-        PhotonNetwork.Disconnect();
+        if (!PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

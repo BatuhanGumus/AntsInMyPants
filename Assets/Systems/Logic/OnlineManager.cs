@@ -48,6 +48,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks, IOnlineManager
             Debug.LogError("[Online Manager]: Username null or empty");
         }
     }
+
+    public void Logout()
+    {
+        PhotonNetwork.Disconnect();
+    }
     
     // Called when login successful
     public override void OnConnectedToMaster()

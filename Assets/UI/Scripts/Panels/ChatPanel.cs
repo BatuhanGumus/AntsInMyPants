@@ -15,13 +15,13 @@ public class ChatPanel : MonoBehaviour
     
     private InputAction _enterChatMode;
     private InputAction _sendChat;
-    private InputAction _closeChat;
+    private InputAction _optionsMenu;
     
     private void Awake()
     {
         _enterChatMode = InputSystem.actions.FindAction("OpenChat");
         _sendChat = InputSystem.actions.FindAction("SendMessage");
-        _closeChat = InputSystem.actions.FindAction("CloseChat");
+        _optionsMenu = InputSystem.actions.FindAction("OptionsMenu");
         
         sendButton.onClick.AddListener(SendMessage);
         GameData.ChatManager.OnNewChatMessage += ReceiveChatMessage;
@@ -40,7 +40,7 @@ public class ChatPanel : MonoBehaviour
                 SendMessage();
             }
 
-            if (_closeChat.WasPressedThisFrame())
+            if (_optionsMenu.WasPressedThisFrame())
             {
                 inputField.OnDeselect(new BaseEventData(EventSystem.current));
             }
